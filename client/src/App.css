@@ -1,0 +1,195 @@
+.App {
+  font-size: 14px;
+}
+
+.App-logo {
+  animation: App-logo-spin infinite 20s linear;
+  height: 40vmin;
+  pointer-events: none;
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.navbar-default {
+    background: none;
+}
+
+.App-link {
+  color: #61dafb;
+}
+.back-image {
+  background-image: url("/w3images/photographer.jpg");
+  background-color: #cccccc;
+  height: 500px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
+}
+
+.abtim{
+  margin-top:10em;
+}
+
+.back-text {
+  text-align: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+}
+
+
+.well { 
+  width:50%;
+  position: absolute;
+  margin-bottom: 20px;}
+
+.one{
+ width: 30rem;
+}
+
+.two{
+  text-align: center;
+}
+
+.arrow1{
+font-size:50px;
+text-align: center;display: inline-block;
+ margin-left: 10em;
+}
+
+.card1 {
+  margin-left: 20em; /* Added */
+  float: none; /* Added */
+
+}
+.nounderline {
+    text-decoration: none !important
+  }
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.space{
+  margin-top: 15em;
+}
+.spacer{
+  margin-left:-10em;
+  margin-right:10em;
+  margin-top: 7em;
+}
+
+.three{
+text-align: center;
+vertical-align: bottom;
+}
+
+..hy img{
+ height: 100%;
+  width: 100%;
+}
+
+.intro-lead-in{font-size:100px;
+  font-style:italic;font-family:'Droid Serif',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif,'Apple Color Emoji','Segoe UI Emoji','Segoe UI Symbol','Noto Color Emoji'}
+  .nounderline {
+    text-decoration: none !important
+  }
+.harsh{ 
+  position:absolute;
+  top: 50%;
+  left:20%;
+  transform: translate(-50%, -50%);
+  }
+.harsh1{ 
+    position:absolute;
+    top: 50%;
+    left:60%;
+    transform: translate(-50%, -50%);
+    }
+
+ .about{
+background-position: relative;
+ background-image: url("./assets/img/1.jpg");
+  height: auto;
+width:100%;
+  /* Center and scale the image nicely */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+
+ }   
+.margin{margin-top: 100px}
+
+
+.errorMsg {
+  color: #cc0000;
+  margin-bottom: 12px;
+}
+
+.header1 {
+  position: relative;
+  background-color: black;
+  height: 94vh;
+  min-height: 25rem;
+  width: 170%;
+  overflow: hidden;
+  margin-left: -25em;
+
+}
+
+.header1 video {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  min-width: 100%;
+  min-height: 100%;
+  width: auto;
+  height: auto;
+  z-index: 0;
+  -ms-transform: translateX(-50%) translateY(-50%);
+  -moz-transform: translateX(-50%) translateY(-50%);
+  -webkit-transform: translateX(-50%) translateY(-50%);
+  transform: translateX(-50%) translateY(-50%);
+}
+
+.header1 .container {
+  position: relative;
+  z-index: 2;
+}
+
+.header1 .overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-color: black;
+  opacity: 0.5;
+  z-index: 1;
+}
+
+@media (pointer: coarse) and (hover: none) {
+  header1 {
+    background: url('https://source.unsplash.com/XT5OInaElMw/1600x900') black no-repeat center center scroll;
+  }
+  header video {
+    display: none;
+  }
+}
