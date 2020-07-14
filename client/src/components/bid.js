@@ -80,7 +80,9 @@ async loadweb3(){
     }
    this.createBid = this.createBid.bind(this);
    this.purchaseBid = this.purchaseBid.bind(this)
+   this.purchaseBid1 = this.purchaseBid1.bind(this)
   }
+
 createBid(checkid,name,message,price) {
     this.setState({ loading: true })
     //let id1=this.props.params.id
@@ -100,6 +102,14 @@ createBid(checkid,name,message,price) {
     })
   }
 
+   purchaseBid1(bid_id,price) {
+    this.setState({ loading: true })
+    this.state.Freelancer.methods.purchaseBid1(bid_id).send({ from: this.state.account, value :price })
+    .once('receipt', (receipt) => {
+      this.setState({ loading: false })
+    })
+  }
+
   render()
   {
     console.log(this.props);
@@ -109,6 +119,7 @@ createBid(checkid,name,message,price) {
         <BidMain bids ={this.state.bids} 
         createBid={this.createBid}
         purchaseBid={this.purchaseBid}
+        purchaseBid1={this.purchaseBid1}
         props ={this.state.props}
          forApprove={this.forApprove} 
          const cidd= {this.props.match.params.cid}

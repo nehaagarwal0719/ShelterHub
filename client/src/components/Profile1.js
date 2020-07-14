@@ -57,12 +57,13 @@ constructor (props){
     count:0,
     blockNumber:0,
     latestBlocks:[],
-    loading : true
-
+    loading : true,
+    sid:0
   }
   
   
 }
+
 
  handleAlternate(event){
    event.preventDefault()
@@ -108,6 +109,11 @@ constructor (props){
                     {this.state.account == "0xc55961b8eaD792670E5393418950BE7597d521ED"?
                    <li className="nav-item">
                    <a href="" data-target="#verify_property" data-toggle="tab" class="nav-link lead"> Verify Property </a>
+                   </li>:null}
+
+                   {this.state.account == "0xc55961b8eaD792670E5393418950BE7597d521ED"?
+                   <li className="nav-item">
+                   <a href="" data-target="#monitor_property" data-toggle="tab" class="nav-link lead"> Monitor Property </a>
                    </li>:null}
 
                </ul>
@@ -457,9 +463,83 @@ constructor (props){
        </div>
 
 
+ <div class="tab-pane" id="monitor_property">
+                           
+                           <div  class="form-group row">  
+                                <form onSubmit={(event) => {
+                                event.preventDefault()
+                                const id = this.propertyIdd.value
+                                this.props.show1(id)
+                                }}>
+                                <div className="form-group row">
+                                <div  class="col-lg-12">
+                                <input
+                                id="propertyId"
+                                type="text"
+                                ref={(input) => { this.propertyIdd = input }}
+                                class="form-control m-2"
+                                placeholder="Property Id"
+                                required />
+                                </div>
+                                </div>
+                                <div class="col-lg-12 text-left">
+                                <button type="submit" className=" col-lg-8 button btn-block">search Property</button>
+
+                                </div>
+                                </form>
+                          </div>   
+                          
+                           {this.props.props.map((property,key)=>{
+                            if(property.id==this.props.sid && property.id>=1){
+                              return(
+                                <div>
+
+                                    <div class="form-group row">
+                                      <label class="col-lg-4 col-form-label form-control-label">Property ID</label>
+                                      <label className="col-lg-8 col-form-label form-control-label">{property.id}</label>
+                                    </div>
+
+                                    <div class="form-group row">
+                                      <label class="col-lg-4 col-form-label form-control-label">Property Owner</label>
+                                      <label className="col-lg-8 col-form-label form-control-label">{property.owner}</label>
+                                    </div>
 
 
+                                    <div class="form-group row">
+                                      <label class="col-lg-4 col-form-label form-control-label">Property Name</label>
+                                      <label className="col-lg-8 col-form-label form-control-label">{property.name}</label>
+                                    </div>
 
+                                    <div class="form-group row">
+                                      <label class="col-lg-4 col-form-label form-control-label">Property Status</label>
+                                      <label className="col-lg-8 col-form-label form-control-label">{property.status}</label>
+                                    </div>
+
+                                     <div class="form-group row">
+                                      <label class="col-lg-4 col-form-label form-control-label">Property Location</label>
+                                      <label className="col-lg-8 col-form-label form-control-label">{property.location}</label>
+                                    </div>
+
+                                     <div class="form-group row">
+                                      <label class="col-lg-4 col-form-label form-control-label">Property Verification status</label>
+                                        {property.bstatus==true? <label className="col-lg-8 col-form-label form-control-label">Verified</label>: <label className="col-lg-8 col-form-label form-control-label">Not Verified</label>}
+                                    </div>
+                                      
+      
+                              <div class="form-group row">
+                                      <label class="col-lg-4 col-form-label form-control-label">Property addition time</label>
+                                          <label className="col-lg-8 col-form-label form-control-label"><Moment unix>{property.time}</Moment></label>
+                                    </div>
+
+                                </div>
+                                );
+                              }})}
+  
+
+                          
+
+
+</div>
 
       </div>
       </div>

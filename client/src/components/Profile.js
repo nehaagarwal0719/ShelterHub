@@ -53,6 +53,9 @@ async loadBlockchainData(){
         bids:[...this.state.bids,bid]
       })      
      }
+     
+    const sid = await Freelancer.methods.sid().call()
+     this.setState({sid})
 
      this.setState({loading:false})
      console.log(this.state.props)
@@ -74,6 +77,7 @@ async loadBlockchainData(){
       props:[],
       propertyCount :0,
       bidCount:0, 
+      sid:0,
       bids:[]
     }
      this.forSale = this.forSale.bind(this)
@@ -81,6 +85,7 @@ async loadBlockchainData(){
      this.forRent = this.forRent.bind(this)
      this.createProperty = this.createProperty.bind(this);
      this.verifyProperty = this.verifyProperty.bind(this);
+     this.show1=this.show1.bind(this);
   }
 
   componentDidMount() {
@@ -107,6 +112,14 @@ async loadBlockchainData(){
   forRent(id) {
     this.setState({ loading: true })
     this.state.Freelancer.methods.forRent(id).send({ from: this.state.account})
+    .once('receipt', (receipt) => {
+      this.setState({ loading: false })
+    })
+  }
+
+  show1(id){
+    this.setState({ loading: true })
+    this.state.Freelancer.methods.show1(id).send({ from: this.state.account})
     .once('receipt', (receipt) => {
       this.setState({ loading: false })
     })
@@ -148,9 +161,11 @@ async loadBlockchainData(){
          forSale={this.forSale}
          forRent={this.forRent}
          verifyProperty={this.verifyProperty}
+         show1={this.show1}
           createProperty={this.createProperty}
           bids ={this.state.bids}
           forApprove={this.forApprove} 
+          sid={this.state.sid}
 
            /> 
       </div>  

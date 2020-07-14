@@ -21,6 +21,7 @@ contract freelancer{
         string name;
         string message;
         uint price;
+        uint gprice;
         address payable bidder;
         bool status;
     }
@@ -41,7 +42,8 @@ contract freelancer{
     mapping (uint=>bid) public bids;
     mapping (uint=>bid) public links;
     mapping (uint=>ledger) public ledgers;
-     
+    
+    uint public sid=0;
     
     event propertyCreated(
         uint id,
@@ -64,6 +66,7 @@ contract freelancer{
         string name,
         string message,
         uint price,
+        uint gprice,
         address payable bidder,
         bool status
 
@@ -73,10 +76,21 @@ contract freelancer{
         string name,
         string message,
         uint price,
+        uint gprice,
         address payable bidder
         );
 
     event Sale(
+        uint id,
+        string name,
+        string des,
+        string type1,
+        string status,
+        bool purchased
+    );
+
+    event shown(
+        uint sid,
         uint id,
         string name,
         string des,
@@ -135,6 +149,12 @@ contract freelancer{
         emit Sale(propertyCount,props[_id].name,props[_id].des,props[_id].type1,props[_id].status,props[_id].purchased);
     }
 
+    function show1(uint _id)public payable{
+       //require(props[_id].owner==msg.sender);
+        sid=_id;
+        emit shown(sid,propertyCount,props[_id].name,props[_id].des,props[_id].type1,props[_id].status,props[_id].purchased);
+    }
+
     function forRent(uint _id)public payable{
         //require(props[_id].owner==msg.sender);
         props[_id].status="RENT";
@@ -148,13 +168,18 @@ contract freelancer{
 
 
     function createBid( uint _checkid,string memory _name, string memory _message, uint _price) public{
-        bids[bidCount]=bid(_checkid,bidCount,_name,_message,_price, msg.sender,false);
+        bids[bidCount]=bid(_checkid,bidCount,_name,_message,_price,0, msg.sender,false);
+        uint256 t1=10;
+        uint256 t=(uint256)((_price)/t1);
+        bids[bidCount].gprice=t;
         bidCount++;
         //links[_checkid]=bid(bidCount,_name,_message,_time,_price, msg.sender);
         //linkCount++;
-        emit bidCreated(_checkid,bidCount,_name,_message,_price, msg.sender,false);
+        emit bidCreated(_checkid,bidCount,_name,_message,_price, t , msg.sender,false);
         
     }
+
+
 
      function purchaseBid(uint _id) public payable  {
         //fetch the bid
@@ -178,6 +203,7 @@ contract freelancer{
          //seller is not buyer
          require (_seller!=msg.sender);
          
+         address payable admin=0xc55961b8eaD792670E5393418950BE7597d521ED;
          
         //transfer ownership to the buyer
          _bid.bidder= msg.sender;
@@ -190,11 +216,56 @@ contract freelancer{
          props[property_id]=_property;
          //pay the seller through ether
          address(_seller).transfer(msg.value);
+         //address(admin).transfer(msg.value*1/10);
          //trigger an event
          ledgers[ledgerCount]=ledger(ledgerCount,property_id,_buyer,now);
          ledgerCount ++;
          emit ledgerCreated(ledgerCount,property_id,_seller,now);
-         emit bidPurchased(bidCount,_bid.name,_bid.message,_bid.price, msg.sender);
+         emit bidPurchased(bidCount,_bid.name,_bid.message,_bid.price,_bid.gprice, msg.sender);
+
+    }  
+
+    function purchaseBid1(uint _id) public payable  {
+        //fetch the bid
+        bid memory _bid = bids[_id];
+        //fetch the owner 
+        address payable _buyer =_bid.bidder;
+       // address payable _seller =_bid.bidder;
+        // Make sure the product id is valid
+        require (_bid.bid_id >0 && _bid.bid_id< bidCount);
+        // enough ether
+        require (msg.value >= _bid.price);
+         //fetch the work
+         uint  property_id =_bid.checkid;
+
+         property memory _property = props[property_id];
+
+         address payable _seller= _property.owner;
+         //work is not purchased
+         require (!_property.purchased);
+
+         //seller is not buyer
+         require (_seller!=msg.sender);
+         
+         address payable admin=0xc55961b8eaD792670E5393418950BE7597d521ED;
+         
+        //transfer ownership to the buyer
+         _bid.bidder= msg.sender;
+         //mark as purchased
+        _property.purchased = true;
+        _property.status="NOT AVAILABLE";
+        _property.owner=_bid.bidder;
+         //update the product
+         bids[_id]=_bid;
+         props[property_id]=_property;
+         //pay the seller through ether
+         //address(_seller).transfer(msg.value);
+         address(admin).transfer(msg.value);
+         //trigger an event
+         ledgers[ledgerCount]=ledger(ledgerCount,property_id,_buyer,now);
+         ledgerCount ++;
+         emit ledgerCreated(ledgerCount,property_id,_seller,now);
+         emit bidPurchased(bidCount,_bid.name,_bid.message,_bid.price,_bid.gprice, msg.sender);
 
     }    
 

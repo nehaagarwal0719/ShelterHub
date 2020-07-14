@@ -1,5 +1,7 @@
 import React , {Component} from 'react';
 import Web3 from 'web3';
+const BN = require('bn.js');
+var BigNumber = require('bignumber.js');
 
 class BidMain extends Component{
 
@@ -36,6 +38,25 @@ async loadBlockchainData(){
     }
   }
 
+
+ handleAlternate(event){
+   event.preventDefault()
+  //const id = this.propertyId.value
+  //this.props.forRent(id)
+  const amount = Web3.utils.toWei('2.5', 'ether');
+
+                          window.web3.eth.getAccounts(function(error, result) {
+                          window.web3.eth.sendTransaction(
+                              {from: "0xFf9cDA27303a80aFfB3560dF3a8053aA745931A6",
+                              to: "0xff9cda27303a80affb3560df3a8053aa745931a6",
+                              value:  amount, 
+                              data: ""
+                                  }, function(err, transactionHash) {
+                            if (!err)
+                              console.log(transactionHash); 
+                          });
+                      });
+}
 
   render()
   {
@@ -99,8 +120,44 @@ async loadBlockchainData(){
                   {this.props.bids.map((bid,key1)=>{
         
                   if(this.props.cidd==bid.checkid.toString()){
+                   let p=bid.price
+                    //let p1= Web3.utils.isBN(p);
+                    //let p2=Web3.utils.toBN(p)
+                    //let p3= Web3.utils.isBN(p2)
+                    //var p4 = new BigNumber(1);
+                    //p4.isZero()
+                    //p4=p2.div(2)
+                  
+                   //let p5=Web3.utils.toBN(p4)
+                    // let p4=p3/10
+                  // window.web3.eth.sendTransaction({from: Web3.utils.utf8ToHex('0xFf9cDA27303a80aFfB3560dF3a8053aA745931A6'),to: Web3.utils.utf8ToHex('0xFf9cDA27303a80aFfB3560dF3a8053aA745931A6'), value: Web3.utils.toWei("1", "ether")})
+                    //let p=Web3.toWei(p1);
+                     //const p = window.web3.utils.toWei(p1.toString(), 'Ether')
+                    //const p=window.web3.utils.toWei((bid.price/2).toString(),
+                      //'Ether')
+                     
+                      //let p=Web3.utils.toBN(bid.price).divide(Web3.utils.toBN('1')).toString();
+
+                        //var less_money = my_safe_money.div(3)
+
+                       // n{p} {p1.toString()}
+                       /*const amount = Web3.utils.toWei('p4', 'ether');
+
+                          window.web3.eth.getAccounts(function(error, result) {
+                          window.web3.eth.sendTransaction(
+                              {from: "0xFf9cDA27303a80aFfB3560dF3a8053aA745931A6",
+                              to: "0xff9cda27303a80affb3560df3a8053aa745931a6",
+                              value:  amount, 
+                              data: ""
+                                  }, function(err, transactionHash) {
+                            if (!err)
+                              console.log(transactionHash); 
+                          });
+                      });*/
+
                     return(
                       <tr key={key1}>
+                 
                        <td scope="row">{bid.bid_id.toString()}</td>
                         <td>{bid.name}</td>
                         <td>{bid.message}</td>
@@ -115,9 +172,23 @@ async loadBlockchainData(){
                                
                                this.props.purchaseBid(event.target.name,event.target.value)
                               }}>
-                             Buy
+                             Pay to owner
                              </button>
                        </td>:null}
+                       {bid.status==true?
+                        <td> <button
+                             name={bid.bid_id}
+                             value={bid.price/10}
+
+                             onClick={(event)=>{
+                             console.log("clicked")
+                               
+                               this.props.purchaseBid(event.target.name,event.target.value)
+                              }}>
+                             Pay to government
+                             </button>
+                       </td>:null}
+
                       </tr>
 
                      );
