@@ -28,7 +28,7 @@
     "react-background-image": "^1.2.0",
     "react-bootstrap": "^0.32.4",
     "react-fontawesome": "^1.7.1",
-    "sequelize": "^4.38.0"
+    "sequelize": "^5.15.1"
   },
   "devDependencies": {
     "nodemon": "^1.18.3"
